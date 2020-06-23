@@ -18,7 +18,22 @@ class BurgerBuilder extends Component {
             cheese: 0,
             bacon: 0
         },
-        total_price: 5 //base 5$
+        total_price: 5, //base 5$
+        can_order: false
+    }
+
+    canOrderHandler = (ingredients) => {
+        console.log(ingredients);
+        const sum = Object.keys(ingredients)
+            .map((ingredient_key) => {
+                return ingredients[ingredient_key];
+            })
+                .reduce((sum, ele) => {
+                    return sum + ele;
+                }, 0);
+        console.log(sum);
+        // const can_order = sum > 0;
+        this.setState({can_order: sum > 0});
     }
 
     addIngredientHandler = (type) => {
@@ -29,6 +44,7 @@ class BurgerBuilder extends Component {
         const old_price = this.state.total_price;
         const new_price = old_price + PRICE_LIST[type];
         this.setState({total_price: new_price, ingredients: ingredient_list});
+        this.canOrderHandler(ingredient_list);
     }
 
     removeIngredientHandler = (type) => {
@@ -39,6 +55,7 @@ class BurgerBuilder extends Component {
         const old_price = this.state.total_price;
         const new_price = old_price - PRICE_LIST[type];
         this.setState({total_price: new_price, ingredients: ingredient_list});
+        this.canOrderHandler(ingredient_list);
     }
 
     render(){
@@ -54,7 +71,8 @@ class BurgerBuilder extends Component {
                     add_ingredient={this.addIngredientHandler} 
                     remove_ingredient={this.removeIngredientHandler}
                     disabled={disabled_buttons}
-                    price={this.state.total_price}/>
+                    price={this.state.total_price}
+                    order_disabled={this.state.can_order}/>
             </Aux>
         );
     }
