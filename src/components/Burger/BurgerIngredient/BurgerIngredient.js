@@ -8,7 +8,7 @@ class BurgerIngredient extends Component{
 
         switch(this.props.type){
             case('bread-bottom'):
-                console.log("Bottom being called!");
+                // console.log("Bottom being called!");
                 ingredient = <div className={classes.BreadBottom}></div>;
                 break;
 
