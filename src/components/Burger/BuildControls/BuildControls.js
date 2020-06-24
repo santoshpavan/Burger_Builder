@@ -21,7 +21,10 @@ const burger_control = (props) => (
                 less_clicked={() => props.remove_ingredient(ctrl.type)}
                 disabled={props.disabled[ctrl.type]}/>
         ))}
-        <button className={classes.OrderButton} disabled={!props.order_disabled}>ORDER NOW!</button>
+        <button 
+            className={classes.OrderButton} 
+            disabled={!props.order_disabled}
+            onClick={props.order_now}>ORDER NOW!</button>
     </div>
 );
 

@@ -21,7 +21,8 @@ class BurgerBuilder extends Component {
             bacon: 0
         },
         total_price: 5, //base 5$
-        can_order: false
+        can_order: false,
+        ordered: false
     }
 
     canOrderHandler = (ingredients) => {
@@ -60,6 +61,15 @@ class BurgerBuilder extends Component {
         this.canOrderHandler(ingredient_list);
     }
 
+    orderNowHandler = () => {//to display order bill (Modal)
+        this.setState({ordered: true});
+    }
+
+    cancelOrderHandler = () => {//to display order bill (Modal)
+        console.log("This is it!")
+        this.setState({ordered: false});
+    }
+
     render(){
         let disabled_buttons = {...this.state.ingredients};
         for(let key in disabled_buttons){
@@ -69,7 +79,7 @@ class BurgerBuilder extends Component {
         return(
             <Aux>
                 <Burger ingredients={this.state.ingredients}/>
-                <Modal>
+                <Modal show={this.state.ordered} backdrop_clicked={this.cancelOrderHandler}>
                     <OrderSummary ingredients={this.state.ingredients}/>
                 </Modal>
                 <BurgerControls 
@@ -77,7 +87,8 @@ class BurgerBuilder extends Component {
                     remove_ingredient={this.removeIngredientHandler}
                     disabled={disabled_buttons}
                     price={this.state.total_price}
-                    order_disabled={this.state.can_order}/>
+                    order_disabled={this.state.can_order}
+                    order_now={this.orderNowHandler}/>
             </Aux>
         );
     }
