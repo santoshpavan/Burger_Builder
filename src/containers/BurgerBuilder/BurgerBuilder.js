@@ -34,7 +34,7 @@ class BurgerBuilder extends Component {
                 .reduce((sum, ele) => {
                     return sum + ele;
                 }, 0);
-        console.log(sum);
+        // console.log(sum);
         // const can_order = sum > 0;
         this.setState({can_order: sum > 0});
     }
@@ -66,8 +66,12 @@ class BurgerBuilder extends Component {
     }
 
     cancelOrderHandler = () => {//to display order bill (Modal)
-        console.log("This is it!")
+        // console.log("This is it!")
         this.setState({ordered: false});
+    }
+
+    completeOrderHandler = () => {
+        alert("You Bought it! No take backs!");
     }
 
     render(){
@@ -80,7 +84,11 @@ class BurgerBuilder extends Component {
             <Aux>
                 <Burger ingredients={this.state.ingredients}/>
                 <Modal show={this.state.ordered} backdrop_clicked={this.cancelOrderHandler}>
-                    <OrderSummary ingredients={this.state.ingredients}/>
+                    <OrderSummary 
+                        ingredients={this.state.ingredients}
+                        cancel_order={this.cancelOrderHandler}
+                        complete_order={this.completeOrderHandler}
+                        total_price={this.state.total_price}/>
                 </Modal>
                 <BurgerControls 
                     add_ingredient={this.addIngredientHandler} 
