@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
-import BurgerControls from '../../components/Burger/BuildControls/BuildControls';
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import axios from '../../axios-orders';
 
 const PRICE_LIST = {
     salad: 0.5,
@@ -71,7 +72,24 @@ class BurgerBuilder extends Component {
     }
 
     completeOrderHandler = () => {
-        alert("You Bought it! No take backs!");
+        //dummy data for the order details
+        const order =  {
+            ingredients: this.state.ingredients,
+            price: this.state.total_price,
+            customer: {
+                name: 'Santosh',
+                address: {
+                    street: 'Test Adress',
+                    zipcode: '27606',
+                    country: 'US'
+                },
+                email: 'santosh@gmail.com'
+            },
+            deliveryMethod: 'fastest'
+        }
+        axios.post('/orders.json', order)
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
     }
 
     render(){
@@ -90,7 +108,7 @@ class BurgerBuilder extends Component {
                         complete_order={this.completeOrderHandler}
                         total_price={this.state.total_price}/>
                 </Modal>
-                <BurgerControls 
+                <BuildControls 
                     add_ingredient={this.addIngredientHandler} 
                     remove_ingredient={this.removeIngredientHandler}
                     disabled={disabled_buttons}
