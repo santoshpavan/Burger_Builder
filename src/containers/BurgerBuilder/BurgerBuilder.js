@@ -5,6 +5,7 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-orders';
 
 const PRICE_LIST = {
@@ -29,7 +30,6 @@ class BurgerBuilder extends Component {
     }
 
     canOrderHandler = (ingredients) => {
-        console.log(ingredients);
         const sum = Object.keys(ingredients)
             .map((ingredient_key) => {
                 return ingredients[ingredient_key];
@@ -133,4 +133,4 @@ class BurgerBuilder extends Component {
     }
 }
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder, axios);
