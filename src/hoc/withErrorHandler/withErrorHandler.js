@@ -10,7 +10,7 @@ const WithErrorHandler = (WrappedComponent, axios) => {
         }
 
         // axios interceptor for Error Handling
-        componentDidMount() {
+        componentWillMount() {
             // have to return something. Hence the returns for req, res and error
             axios.interceptors.request.use(req => {
                 // when we send a request. We want error to be cleared
