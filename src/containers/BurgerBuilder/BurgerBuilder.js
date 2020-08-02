@@ -17,16 +17,20 @@ const PRICE_LIST = {
 
 class BurgerBuilder extends Component {
     state = {
-        ingredients: {
-            meat: 0,
-            salad: 0,
-            cheese: 0,
-            bacon: 0
-        },
+        ingredients: null,
         total_price: 5, //base 5$
         can_order: false,
         ordered: false,
         loading: false
+    }
+
+    componentDidMount() {
+        axios.get('https://react-burger-builder-4309a.firebaseio.com/ingredients.json')
+            .then(response => {
+                this.setState({ingredients: response.data});
+            }).catch(e => {
+                console.log(e);
+            });
     }
 
     canOrderHandler = (ingredients) => {
@@ -105,29 +109,38 @@ class BurgerBuilder extends Component {
             disabled_buttons[key] = disabled_buttons[key] <= 0;
         }//makes it key, boolean pair
 
-        let orderSummary = <OrderSummary 
-            ingredients={this.state.ingredients}
-            cancel_order={this.cancelOrderHandler}
-            complete_order={this.completeOrderHandler}
-            total_price={this.state.total_price}/>
-
-        if (this.state.loading) {
-            orderSummary = <Spinner />;
-        }
-
-        return(
-            <Aux>
-                <Burger ingredients={this.state.ingredients}/>
-                <Modal show={this.state.ordered} backdrop_clicked={this.cancelOrderHandler}>
-                    {orderSummary}
-                </Modal>
-                <BuildControls 
+        let orderSummary = null;        
+        let burger = <Spinner/>
+        if (this.state.ingredients) {
+            burger = (
+                <Aux>
+                    <Burger ingredients={this.state.ingredients}/>
+                    <BuildControls 
                     add_ingredient={this.addIngredientHandler} 
                     remove_ingredient={this.removeIngredientHandler}
                     disabled={disabled_buttons}
                     price={this.state.total_price}
                     order_disabled={this.state.can_order}
                     order_now={this.orderNowHandler}/>
+                </Aux>
+            );
+            orderSummary = <OrderSummary 
+            ingredients={this.state.ingredients}
+            cancel_order={this.cancelOrderHandler}
+            complete_order={this.completeOrderHandler}
+            total_price={this.state.total_price}/>
+        }
+        
+        if (this.state.loading) {
+            orderSummary = <Spinner />;
+        }
+
+        return(
+            <Aux>                
+                <Modal show={this.state.ordered} backdrop_clicked={this.cancelOrderHandler}>
+                    {orderSummary}
+                </Modal>
+                {burger}
             </Aux>
         );
     }
