@@ -9,17 +9,23 @@ const WithErrorHandler = (WrappedComponent, axios) => {
             error: null
         }
 
-        // axios interceptor for Error Handling
+        // axios interceptor for Error Handling - runs in the beginning
         componentWillMount() {
             // have to return something. Hence the returns for req, res and error
-            axios.interceptors.request.use(req => {
+            this.reqInterceptor = axios.interceptors.request.use(req => {
                 // when we send a request. We want error to be cleared
                 this.setState({error: null});
                 return req;
             });
-            axios.interceptors.response.use(res => res, error => {
+            this.resInterceptor = axios.interceptors.response.use(res => res, error => {
                 this.setState({error: error});
             });
+        }
+        
+        // ejecting the interceptors once done
+        componentWillUnmount() {
+            axios.interceptors.request.eject(this.reqInterceptor);
+            axios.interceptors.response.eject(this.resInterceptor);
         }
         
         errorConfirmedHandler = () => {

@@ -25,6 +25,7 @@ class BurgerBuilder extends Component {
         error: false
     }
 
+    // runs at the last
     componentDidMount() {
         axios.get('https://react-burger-builder-4309a.firebaseio.com/ingredients.json')
             .then(response => {
