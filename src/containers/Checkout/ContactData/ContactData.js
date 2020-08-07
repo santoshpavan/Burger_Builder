@@ -29,7 +29,7 @@ class ContactData extends Component {
                 name: 'Santosh',
                 address: {
                     street: 'Test Adress',
-                    zipcode: '27606',
+                    zipcode: '123',
                     country: 'US'
                 },
                 email: 'santosh@gmail.com'
@@ -61,6 +61,7 @@ class ContactData extends Component {
         if (this.state.loading) {
             form = <Spinner />;
         }
+        
         return (
             <div className={classes.ContactData}>
                 <h4>Enter your Contact Data</h4>

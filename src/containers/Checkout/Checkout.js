@@ -13,15 +13,15 @@ class Checkout extends Component {
         const query = new URLSearchParams(this.props.location.search);
         const ingredients = {};
         let price = 0;
-        for (let param in query.entries()) {
+        for (let param of query.entries()) {
             // ['bacon', '1']
-            if (param[0] != 'price') {
-                ingredients[param[0]] = +param[1]; //adding + converts it into number
+            if (param[0] === 'price') {
+                price = param[1];
             } else {
-                price = +param[1];
+                ingredients[param[0]] = +param[1]; //adding + converts it into number
             }
         }
-
+        
         this.setState({ingredients: ingredients, totalPrice: price});
     }
 
