@@ -19,7 +19,7 @@ class Orders extends Component {
                         id: key //need to save as firebase created these and we don't know
                     });
                 }
-                this.setState({loading: false});
+                this.setState({loading: false, orders: fetchedOrders});
             })
             .catch(error => {
                 this.setState({loading: false});
@@ -27,17 +27,18 @@ class Orders extends Component {
     }
 
     render () {
+        console.log(this.state.orders)
         return (
             <div>
                 {this.state.orders.map(order => (
                     <Order 
                         key={order.id}
                         ingredients={order.ingredients}
-                        price={+order.price}/>
+                        price={order.price}/>
                 ))}
             </div>
         );
     }
 }
 
-export default withErrorHandler(Orders);
+export default withErrorHandler(Orders, axios);

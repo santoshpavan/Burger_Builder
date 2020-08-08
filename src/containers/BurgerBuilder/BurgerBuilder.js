@@ -113,10 +113,10 @@ class BurgerBuilder extends Component {
                 </Aux>
             );
             orderSummary = <OrderSummary 
-            ingredients={this.state.ingredients}
-            cancel_order={this.cancelOrderHandler}
-            complete_order={this.completeOrderHandler}
-            total_price={this.state.total_price}/>
+                ingredients={this.state.ingredients}
+                cancel_order={this.cancelOrderHandler}
+                complete_order={this.completeOrderHandler}
+                total_price={this.state.total_price}/>
         }
         
         if (this.state.loading) {
