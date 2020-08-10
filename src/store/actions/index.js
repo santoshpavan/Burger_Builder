@@ -1,7 +1,8 @@
 // using this to export all of actions
 export {
     addIngredient,
-    removeIngredient
+    removeIngredient,
+    initIngredients
 } from './burgerBuilder';
 
 export {} from './order';
