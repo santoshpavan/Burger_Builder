@@ -36,7 +36,7 @@ class BurgerBuilder extends Component {
                 .reduce((sum, ele) => {
                     return sum + ele;
                 }, 0);
-        this.setState({can_order: sum > 0});
+        return sum > 0;
     }
 
     orderNowHandler = () => {//to display order bill (Modal)
@@ -44,22 +44,11 @@ class BurgerBuilder extends Component {
     }
 
     cancelOrderHandler = () => {//to display order bill (Modal)
-        // console.log("This is it!")
         this.setState({ordered: false});
     }
 
     completeOrderHandler = () => {
-        const queryParams = [];
-        for (let i in this.props.ings) {
-            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.props.ings[i]));
-        }
-        // need total_price for checkout summary -> Contact Data
-        queryParams.push('price=' + this.state.total_price);
-        const queryString = queryParams.join('&');
-        this.props.history.push({
-            pathname: '/checkout',
-            search: '?' + queryString //query params
-        }); //routing to /checkout
+        this.props.history.push('/checkout'); //routing to /checkout
     }
 
     render(){
@@ -79,7 +68,7 @@ class BurgerBuilder extends Component {
                     remove_ingredient={this.props.onIngredientRemoved}
                     disabled={disabled_buttons}
                     price={this.props.price}
-                    order_disabled={this.state.can_order}
+                    order_disabled={this.canOrderHandler(this.props.ings)}
                     order_now={this.orderNowHandler}/>
                 </Aux>
             );
