@@ -12,7 +12,6 @@ import * as actionTypes from '../../store/actions';
 
 class BurgerBuilder extends Component {
     state = {
-        total_price: 5, //base 5$
         can_order: false,
         ordered: false,
         loading: false,
@@ -76,10 +75,10 @@ class BurgerBuilder extends Component {
                 <Aux>
                     <Burger ingredients={this.props.ings}/>
                     <BuildControls 
-                    add_ingredient={this.addIngredientHandler} 
-                    remove_ingredient={this.removeIngredientHandler}
+                    add_ingredient={this.props.onIngredientAdded} 
+                    remove_ingredient={this.props.onIngredientRemoved}
                     disabled={disabled_buttons}
-                    price={this.state.total_price}
+                    price={this.props.price}
                     order_disabled={this.state.can_order}
                     order_now={this.orderNowHandler}/>
                 </Aux>
@@ -88,7 +87,7 @@ class BurgerBuilder extends Component {
                 ingredients={this.props.ings}
                 cancel_order={this.cancelOrderHandler}
                 complete_order={this.completeOrderHandler}
-                total_price={this.state.total_price}/>
+                total_price={this.props.price}/>
         }
         
         if (this.state.loading) {
@@ -108,7 +107,8 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
     return {
-        ings: state.ingredients
+        ings: state.ingredients,
+        price: state.total_price
     };
 };
 const mapDispatchToProps = dispatch => {
