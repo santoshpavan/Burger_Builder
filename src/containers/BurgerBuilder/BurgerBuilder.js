@@ -64,12 +64,12 @@ class BurgerBuilder extends Component {
                 <Aux>
                     <Burger ingredients={this.props.ings}/>
                     <BuildControls 
-                    add_ingredient={this.props.onIngredientAdded} 
-                    remove_ingredient={this.props.onIngredientRemoved}
-                    disabled={disabled_buttons}
-                    price={this.props.price}
-                    order_disabled={this.canOrderHandler(this.props.ings)}
-                    order_now={this.orderNowHandler}/>
+                        add_ingredient={this.props.onIngredientAdded} 
+                        remove_ingredient={this.props.onIngredientRemoved}
+                        disabled={disabled_buttons}
+                        price={this.props.price}
+                        order_disabled={this.canOrderHandler(this.props.ings)}
+                        order_now={this.orderNowHandler}/>
                 </Aux>
             );
             orderSummary = <OrderSummary 
@@ -102,8 +102,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredients: ingName}),
-        onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredients: ingName})
+        onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName}),
+        onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName})
     }
 };
 
