@@ -1,6 +1,5 @@
 import * as actionTypes from './actionsTypes';
 import axios from '../../axios-orders'
-import order from '../../components/Order/Order';
 
 export const purchaseBurgerSuccess = (id, orderData) => {
     return {
@@ -26,7 +25,6 @@ export const purchaseBurgerStart = () => {
 // async code
 export const purchaseBurger = (orderData) => {
     return dispatch => {
-        dispatch(fetchOrdersStart());
         // dispatching to the store
         dispatch(purchaseBurgerStart());
         axios.post( '/orders.json', orderData )
@@ -67,6 +65,7 @@ export const fetchOrdersStart = () => {
 
 export const fetchOrders = () => {
     return dispatch => {
+        dispatch(fetchOrdersStart());
         axios.get('/orders.json')
             .then(res => {
                 const fetchedOrders = [];
@@ -76,7 +75,7 @@ export const fetchOrders = () => {
                         id: key //need to save as firebase created these and we don't know
                     });
                 }
-                dispatch(fetchOrdersSuccess(fetchOrders));
+                dispatch(fetchOrdersSuccess(fetchedOrders));
             })
             .catch(error => {
                 dispatch(fetchOrdersFail(error));
