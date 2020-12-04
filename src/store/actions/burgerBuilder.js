@@ -33,9 +33,9 @@ export const initIngredients = () => {
         axios.get( 'https://react-burger-builder-4309a.firebaseio.com/ingredients.json' )
             .then( response => {
                dispatch(setIngredients(response.data));
-            } )
+            })
             .catch( error => {
                 dispatch(fetchIngredientsFailed());
-            } );
+        });
     };
 };
