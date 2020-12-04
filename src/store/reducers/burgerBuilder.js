@@ -1,25 +1,25 @@
-import * as actionTypes from '../actions/actionsTypes';
+import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
 const initialState = {
     ingredients: null,
-    total_price: 5, //base 5$
-    error: false //true if loading fails
+    totalPrice: 4,
+    error: false
 };
 
-const PRICE_LIST = {
+const INGREDIENT_PRICES = {
     salad: 0.5,
-    meat: 1,
-    bacon: 2,
-    cheese: 1.5
-}
+    cheese: 0.4,
+    meat: 1.3,
+    bacon: 0.7
+};
 
 const addIngredient = ( state, action ) => {
     const updatedIngredient = { [action.ingredientName]: state.ingredients[action.ingredientName] + 1 }
     const updatedIngredients = updateObject( state.ingredients, updatedIngredient );
     const updatedState = {
         ingredients: updatedIngredients,
-        total_price: state.total_price + PRICE_LIST[action.ingredientName]
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
     }
     return updateObject( state, updatedState );
 };
@@ -29,7 +29,7 @@ const removeIngredient = (state, action) => {
     const updatedIngs = updateObject( state.ingredients, updatedIng );
     const updatedSt = {
         ingredients: updatedIngs,
-        total_price: state.total_price - PRICE_LIST[action.ingredientName]
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
     }
     return updateObject( state, updatedSt );
 };
@@ -42,7 +42,7 @@ const setIngredients = (state, action) => {
             cheese: action.ingredients.cheese,
             meat: action.ingredients.meat
         },
-        total_price: 5,
+        totalPrice: 4,
         error: false
     } );
 };

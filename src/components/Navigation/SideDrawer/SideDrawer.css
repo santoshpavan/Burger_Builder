@@ -13,7 +13,7 @@
 }
 
 @media (min-width: 500px) {
-    .SideDrawer{
+    .SideDrawer {
         display: none;
     }
 }
@@ -30,9 +30,3 @@
     height: 11%;
     margin-bottom: 32px;
 }
-
-/* @media (max-width: 499px) {
-    .DesktopOnly {
-        display: none;
-    }
-} */
